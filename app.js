@@ -34,17 +34,14 @@ function iniciarTotem() {
 
     while (idade === "" || /[a-zA-Z]/.test(idade)) {
         idade = readline.question(nome + ", digite sua idade: ");
-          if (idade <= 0 || idade > 120) //Verifica se a idade é um número positivo e dentro de um limite razoável.
-    {
-        console.log("[ERRO] Idade inválida! Digite um valor entre 1 e 120.\n");
-        return
-    }
         if (/[a-zA-Z]/.test(idade)) {
             console.log("[ERRO] Idade inválida! A idade deve ser um número inteiro.\n");
         } else if (idade === "") {
             console.log("[ERRO] A idade do cliente não pode estar vazia!\n");
+        } else if (idade <= 0 || idade > 120) {
+            console.log("[ERRO] Idade inválida! Digite um valor entre 1 e 120.");
+            return;
         }
-
     }
 
     // =================================================================
@@ -56,32 +53,36 @@ function iniciarTotem() {
             console.log("[ERRO] Altura inválida! A altura deve ser um número decimal.\n");
         } else if (altura === "") {
             console.log("[ERRO] A altura do cliente não pode estar vazia!\n");
+        } else if (altura <= 0.50 || altura > 2.50) {
+            console.log("[ERRO] Altura inválida! A altura deve estar entre 0.50m e 2.50m.");
+            return;
         }
     }
-
     // =================================================================
     //VERIFICAÇÃO FINAL DE ACESSO:
 
-    if (altura >= 1.50 && idade < 12) //Verifica se o cliente tem a altura necessária, mas não atingiu a idade mínima.
-    {
-        console.log("[ACESSO NEGADO] " + nome + ", você possui a altura necessária, mas não atingiu a idade mínima de 12 anos.\n")
+    // =================================================================
+    // VERIFICAÇÃO FINAL DE ACESSO:
+
+    if (idade >= 12 && altura >= 0.50) {
+        console.log("\nOlá, " + nome + "! Cadastro validado com sucesso.");
+        console.log("\nSeu acesso foi PERMITIDO " + nome + ". Divirta-se na MegaloDon!");
     }
 
-    else if (idade >= 12 && altura < 1.50) //Verifica se o cliente tem a idade necessária, mas não atingiu a altura mínima.
-    {
-        console.log("[ACESSO NEGADO] " + nome + ", você possui a idade necessária, mas não atingiu a altura mínima de 1.50m.\n")
+    else if (altura >= 0.50 && idade < 12) {
+        console.log("\n[ACESSO NEGADO] - " + nome +
+            ", você possui a altura necessária, mas não atingiu a idade mínima de 12 anos.");
     }
 
-    else if (idade < 12 && altura < 1.50) //Verifica se o cliente não atende aos requisitos de idade e altura para acessar a montanha-russa.
-    {
-        console.log("[ACESSO NEGADO] " + nome + ", o acesso foi recusado porque você não possui a idade mínima (12 anos) e nem a altura mínima (1.50m).\n")
-    }
-    else //Verifica se o cliente atende aos requisitos de idade e altura para acessar a montanha-russa.
-    {
-        console.log("Olá, " + nome + "! Cadastro validado com sucesso. Seu acesso foi PERMITIDO. \n Divirta-se na MegaloDon!\n");
+    else if (idade >= 12 && altura < 0.50) {
+        console.log("\n[ACESSO NEGADO] - " + nome +
+            ", você possui a idade necessária, mas não atingiu a altura mínima de 0.50m.");
     }
 
+    else if (idade < 12 && altura < 0.50) {
+        console.log("\n[ACESSO NEGADO] - " + nome +
+            ", o acesso foi recusado porque você não possui a idade mínima (12 anos) e nem a altura mínima (0.50m).");
+    }
 }
 
-//Iniciando o sistema do Totem MegaloDon
 iniciarTotem();
